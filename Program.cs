@@ -73,6 +73,24 @@ namespace FCT_POC_API
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]))
                 };
             });
+
+            //CORS-----------------------------
+            var specificOrgins = "AppOrigins";
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: specificOrgins,
+                                  policy =>
+                                  {
+                                      policy.WithOrigins("http://localhost:4200")
+                                      .AllowAnyHeader()
+                                      .AllowAnyMethod();
+                                  });
+            });
+
+            //CORS-----------------------------
+
+
             var app = builder.Build();
 
             app.UseAuthentication();
@@ -83,6 +101,11 @@ namespace FCT_POC_API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+
+
+            app.UseCors(specificOrgins);
+
 
             app.UseHttpsRedirection();
 

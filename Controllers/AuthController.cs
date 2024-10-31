@@ -16,7 +16,7 @@ namespace FCT_POC_API.Controllers
 
             if (user != null)
             {
-                if (user.Email != null && user.Email == "admin" && user.Password != null && user.Password == "admin")
+                if (user.login != null && user.login == "admin" && user.Password != null && user.Password == "admin")
                 {
                     isValidUser = true;
                 }
@@ -32,7 +32,7 @@ namespace FCT_POC_API.Controllers
                 {
                     Subject = new ClaimsIdentity(new Claim[]
                     {
-                new Claim(ClaimTypes.Name, user.Email)
+                new Claim(ClaimTypes.Name, user.login)
                         // Add more claims as needed
                     }),
                     Expires = DateTime.UtcNow.AddMinutes(30),
@@ -43,6 +43,7 @@ namespace FCT_POC_API.Controllers
 
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 var tokenString = tokenHandler.WriteToken(token);
+
                 Response.Headers.Append("Authorization", "Bearer " + tokenString);
                 return Ok();
             }
