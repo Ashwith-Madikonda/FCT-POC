@@ -5,7 +5,7 @@ namespace FCT_POC_API.Controllers
 {
     public class UserController : Controller
     {
-        [HttpGet("GetUserDetails")]
+        [HttpGet("getUserDetails")]
         [Authorize]
         public async Task<ActionResult<dynamic>> GetUserDetails()
         {

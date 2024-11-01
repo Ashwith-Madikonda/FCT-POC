@@ -44,8 +44,12 @@ namespace FCT_POC_API.Controllers
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 var tokenString = tokenHandler.WriteToken(token);
 
-                Response.Headers.Append("Authorization", "Bearer " + tokenString);
-                return Ok();
+                var response = new
+                {
+                    token= tokenString
+                };
+                
+                return Ok(response);
             }
             return Unauthorized();
         }
